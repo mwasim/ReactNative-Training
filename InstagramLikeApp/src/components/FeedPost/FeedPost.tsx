@@ -8,6 +8,7 @@ import colors from '../../theme/colos';
 import Comment from '../Comment';
 import {IPost} from '../../types/models';
 import {useState} from 'react';
+import DoublePressable from '../DoublePressable';
 
 interface IFeedPost {
   post: IPost;
@@ -23,6 +24,7 @@ const FeedPost = ({post}: IFeedPost) => {
   const toggleIsLiked = () => {
     setIsLiked(v => !v);
   };
+
   // console.log('props: ' + post);
   return (
     <View style={styles.post}>
@@ -43,12 +45,14 @@ const FeedPost = ({post}: IFeedPost) => {
       </View>
 
       {/* Content */}
-      <Image
-        source={{
-          uri: post.image,
-        }}
-        style={styles.image}
-      />
+      <DoublePressable onDoublePress={toggleIsLiked}>
+        <Image
+          source={{
+            uri: post.image,
+          }}
+          style={styles.image}
+        />
+      </DoublePressable>
 
       {/* Footer */}
       <View style={styles.footer}>
