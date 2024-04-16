@@ -1,4 +1,4 @@
-import {Image, Text, View} from 'react-native';
+import {Image, Text, View, Pressable} from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -15,8 +15,13 @@ interface IFeedPost {
 
 const FeedPost = ({post}: IFeedPost) => {
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
+
   const toggleDescriptionExpanded = () => {
-    setIsDescriptionExpanded(!isDescriptionExpanded);
+    setIsDescriptionExpanded(value => !value);
+  };
+  const toggleIsLiked = () => {
+    setIsLiked(v => !v);
   };
   // console.log('props: ' + post);
   return (
@@ -48,12 +53,14 @@ const FeedPost = ({post}: IFeedPost) => {
       {/* Footer */}
       <View style={styles.footer}>
         <View style={styles.iconContainer}>
-          <AntDesign
-            name="hearto"
-            style={styles.icon}
-            size={24}
-            color={colors.black}
-          />
+          <Pressable onPress={toggleIsLiked}>
+            <AntDesign
+              name={isLiked ? 'heart' : 'hearto'}
+              style={styles.icon}
+              size={24}
+              color={isLiked ? colors.accent : colors.black}
+            />
+          </Pressable>
           <Ionicons
             name="chatbubble-outline"
             style={styles.icon}
