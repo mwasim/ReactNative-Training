@@ -7,12 +7,17 @@ import styles from './styles';
 import colors from '../../theme/colos';
 import Comment from '../Comment';
 import {IPost} from '../../types/models';
+import {useState} from 'react';
 
 interface IFeedPost {
   post: IPost;
 }
 
 const FeedPost = ({post}: IFeedPost) => {
+  const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
+  const toggleDescriptionExpanded = () => {
+    setIsDescriptionExpanded(!isDescriptionExpanded);
+  };
   // console.log('props: ' + post);
   return (
     <View style={styles.post}>
@@ -76,9 +81,12 @@ const FeedPost = ({post}: IFeedPost) => {
         </Text>
 
         {/* Post description */}
-        <Text style={styles.text}>
+        <Text style={styles.text} numberOfLines={isDescriptionExpanded ? 0 : 3}>
           <Text style={styles.bold}>{post.user.username}</Text>{' '}
           {post.description}
+        </Text>
+        <Text onPress={toggleDescriptionExpanded}>
+          {isDescriptionExpanded ? 'less' : 'more'}
         </Text>
 
         {/* Comments */}
