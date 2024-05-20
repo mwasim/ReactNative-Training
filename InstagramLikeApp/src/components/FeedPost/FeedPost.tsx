@@ -9,6 +9,7 @@ import Comment from '../Comment';
 import {IPost} from '../../types/models';
 import {useState} from 'react';
 import DoublePressable from '../DoublePressable';
+import Carousal from '../Carousal';
 
 interface IFeedPost {
   post: IPost;
@@ -24,6 +25,13 @@ const FeedPost = ({post}: IFeedPost) => {
   const toggleIsLiked = () => {
     setIsLiked(v => !v);
   };
+
+  let postContent = null;
+  if (post.image) {
+    postContent = <Image source={{uri: post.image}} style={styles.image} />;
+  } else if (post.images) {
+    postContent = <Carousal images={post.images} />;
+  }
 
   // console.log('props: ' + post);
   return (
@@ -46,12 +54,7 @@ const FeedPost = ({post}: IFeedPost) => {
 
       {/* Content */}
       <DoublePressable onDoublePress={toggleIsLiked}>
-        <Image
-          source={{
-            uri: post.image,
-          }}
-          style={styles.image}
-        />
+        {postContent}
       </DoublePressable>
 
       {/* Footer */}
