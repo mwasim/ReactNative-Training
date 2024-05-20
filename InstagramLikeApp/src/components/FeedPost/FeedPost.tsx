@@ -28,9 +28,15 @@ const FeedPost = ({post}: IFeedPost) => {
 
   let postContent = null;
   if (post.image) {
-    postContent = <Image source={{uri: post.image}} style={styles.image} />;
+    postContent = (
+      <DoublePressable onDoublePress={toggleIsLiked}>
+        <Image source={{uri: post.image}} style={styles.image} />
+      </DoublePressable>
+    );
   } else if (post.images) {
-    postContent = <Carousal images={post.images} />;
+    postContent = (
+      <Carousal images={post.images} onDoublePress={toggleIsLiked} />
+    );
   }
 
   // console.log('props: ' + post);
