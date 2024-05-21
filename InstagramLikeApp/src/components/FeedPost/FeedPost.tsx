@@ -10,6 +10,7 @@ import {IPost} from '../../types/models';
 import {useState} from 'react';
 import DoublePressable from '../DoublePressable';
 import Carousal from '../Carousal';
+import VideoPlayer from '../VideoPlayer';
 
 interface IFeedPost {
   post: IPost;
@@ -36,6 +37,12 @@ const FeedPost = ({post}: IFeedPost) => {
   } else if (post.images) {
     postContent = (
       <Carousal images={post.images} onDoublePress={toggleIsLiked} />
+    );
+  } else if (post.video) {
+    postContent = (
+      <DoublePressable onDoublePress={toggleIsLiked}>
+        <VideoPlayer uri={post.video} />
+      </DoublePressable>
     );
   }
 
